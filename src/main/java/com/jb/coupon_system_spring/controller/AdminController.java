@@ -5,6 +5,8 @@ import com.jb.coupon_system_spring.beans.Company;
 import com.jb.coupon_system_spring.beans.Customer;
 import com.jb.coupon_system_spring.beans.ErrorTypes;
 import com.jb.coupon_system_spring.exceptions.AdminException;
+import com.jb.coupon_system_spring.exceptions.CompanyException;
+import com.jb.coupon_system_spring.exceptions.CustomerException;
 import com.jb.coupon_system_spring.exceptions.LoginException;
 import com.jb.coupon_system_spring.service.AdminService;
 import com.jb.coupon_system_spring.util.JWT;
@@ -35,7 +37,7 @@ public class AdminController {
      */
     @GetMapping("/allCompanies")
     public ResponseEntity<?> getAllCompanies
-            (@RequestHeader(name = "Authorization") String token)
+    (@RequestHeader(name = "Authorization") String token)
             throws LoginException {
         jwt.checkClient(adminService,token,clientType);
         return ResponseEntity.ok()
@@ -51,7 +53,7 @@ public class AdminController {
      */
     @GetMapping("/allCustomers")
     public ResponseEntity<?> getAllCustomers
-            (@RequestHeader(name = "Authorization") String token)
+    (@RequestHeader(name = "Authorization") String token)
             throws LoginException {
         jwt.checkClient(adminService,token,clientType);
         return ResponseEntity.ok()
@@ -69,7 +71,7 @@ public class AdminController {
      */
     @GetMapping("/company/{id}")
     public ResponseEntity<?> getCompanyById
-            (@RequestHeader(name = "Authorization") String token, @PathVariable int id)
+    (@RequestHeader(name = "Authorization") String token, @PathVariable int id)
             throws AdminException, LoginException {
         jwt.checkClient(adminService,token,clientType);
         return ResponseEntity.ok()
@@ -87,7 +89,7 @@ public class AdminController {
      */
     @GetMapping("/customer/{id}")
     public ResponseEntity<?> getCustomerById
-            (@RequestHeader(name = "Authorization") String token, @PathVariable int id)
+    (@RequestHeader(name = "Authorization") String token, @PathVariable int id)
             throws AdminException, LoginException {
         jwt.checkClient(adminService,token,clientType);
         return ResponseEntity.ok()
@@ -105,13 +107,12 @@ public class AdminController {
      */
     @PostMapping("/company/add")
     public ResponseEntity<?> addCompany
-            (@RequestHeader(name = "Authorization") String token, @RequestBody Company company)
-            throws LoginException {
+    (@RequestHeader(name = "Authorization") String token, @RequestBody Company company)
+            throws LoginException, CompanyException {
         jwt.checkClient(adminService,token,clientType);
-        adminService.addCompany(company);
         return ResponseEntity.ok()
                 .header("Authorization", adminService.getToken())
-                .build();
+                .body(adminService.addCompany(company));
     }
 
     /**
@@ -123,13 +124,12 @@ public class AdminController {
      */
     @PostMapping("/customer/add")
     public ResponseEntity<?> addCustomer
-            (@RequestHeader(name = "Authorization") String token, @RequestBody Customer customer)
-            throws LoginException {
+    (@RequestHeader(name = "Authorization") String token, @RequestBody Customer customer)
+            throws LoginException, CustomerException {
         jwt.checkClient(adminService,token,clientType);
-        adminService.addCustomer(customer);
         return ResponseEntity.ok()
                 .header("Authorization", adminService.getToken())
-                .build();
+                .body(adminService.addCustomer(customer));
     }
 
     /**
@@ -142,7 +142,7 @@ public class AdminController {
      */
     @PutMapping("/company/update")
     public ResponseEntity<?> updateCompany
-            (@RequestHeader(name = "Authorization") String token, @RequestBody Company company)
+    (@RequestHeader(name = "Authorization") String token, @RequestBody Company company)
             throws AdminException, LoginException {
         jwt.checkClient(adminService,token,clientType);
         adminService.updateCompany(company);
@@ -162,7 +162,7 @@ public class AdminController {
      */
     @PutMapping("/customer/update")
     public ResponseEntity<?> updateCustomer
-            (@RequestHeader(name = "Authorization") String token, @RequestBody Customer customer)
+    (@RequestHeader(name = "Authorization") String token, @RequestBody Customer customer)
             throws AdminException, LoginException {
         jwt.checkClient(adminService,token,clientType);
         adminService.updateCustomer(customer);
@@ -181,7 +181,7 @@ public class AdminController {
      */
     @DeleteMapping("/company/delete/{id}")
     public ResponseEntity<?> deleteCompany
-            (@RequestHeader(name = "Authorization") String token, @PathVariable int id)
+    (@RequestHeader(name = "Authorization") String token, @PathVariable int id)
             throws AdminException, LoginException {
         jwt.checkClient(adminService,token,clientType);
         adminService.deleteCompany(id);
@@ -200,7 +200,7 @@ public class AdminController {
      */
     @DeleteMapping("/customer/delete/{id}")
     public ResponseEntity<?> deleteCustomer
-            (@RequestHeader(name = "Authorization") String token, @PathVariable int id)
+    (@RequestHeader(name = "Authorization") String token, @PathVariable int id)
             throws AdminException, LoginException {
         jwt.checkClient(adminService,token,clientType);
         adminService.deleteCustomer(id);
