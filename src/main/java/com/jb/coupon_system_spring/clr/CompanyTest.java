@@ -20,14 +20,14 @@ public class CompanyTest implements CommandLineRunner {
     private final int ONE_DAY=1000*60*60*24;
     @Override
     public void run(String... args) throws Exception {
-            addCoupons();
-            updateCoupons();
-            deleteCoupon();
-            allCompanyCoupons();
-            allCompanyCouponsByCategory();
-            allCompanyCouponsByPrice();
-            companyDetails();
-            exceptionTest();
+        addCoupons();
+        updateCoupons();
+        deleteCoupon();
+        allCompanyCoupons();
+        allCompanyCouponsByCategory();
+        allCompanyCouponsByPrice();
+        companyDetails();
+        exceptionTest();
     }
 
     public void addCoupons()  {
@@ -146,7 +146,7 @@ public class CompanyTest implements CommandLineRunner {
                 .image("https://ecommerceguide.com/wp-content/uploads/2016/01/coupon-main.jpg")
                 .build();
         try {
-            companyService.addCoupon(coupon);
+            System.out.println(companyService.addCoupon(coupon));
         }
         catch (Exception err){
             System.out.println(err.getMessage());
@@ -180,12 +180,12 @@ public class CompanyTest implements CommandLineRunner {
                 .price(Math.ceil(Math.random()*100+1))
                 .startDate(new Date(System.currentTimeMillis()))
                 .endDate(new Date(System.currentTimeMillis()+(int)(Math.random()*7+1)*ONE_DAY))
-                .image("image")
+                .image("https://ecommerceguide.com/wp-content/uploads/2016/01/coupon-main.jpg")
                 .build();
 
         try {
-            companyService.addCoupon(coupon);
-            companyService.addCoupon(coupon2);
+            System.out.println(companyService.addCoupon(coupon));
+            System.out.println(companyService.addCoupon(coupon2));
         }
         catch (Exception err){
             System.out.println(err.getMessage());
@@ -208,7 +208,7 @@ public class CompanyTest implements CommandLineRunner {
     }
 
     public void deleteCouponException(){
-            companyService.setClientId(1);
+        companyService.setClientId(1);
         try {
             companyService.deleteCoupon(66);
         } catch (CompanyException e) {

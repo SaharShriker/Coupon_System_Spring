@@ -30,7 +30,7 @@ public class CompanyController {
      */
     @GetMapping("/Details")
     public ResponseEntity<?> companyDetails
-            (@RequestHeader(name = "Authorization") String token)
+    (@RequestHeader(name = "Authorization") String token)
             throws CompanyException, LoginException {
         jwt.checkClient(companyService,token,clientType);
         return ResponseEntity.ok()
@@ -48,13 +48,12 @@ public class CompanyController {
      */
     @PostMapping("/addCoupon")
     public ResponseEntity<?> addNewCoupon
-            (@RequestHeader(name = "Authorization")String token, @RequestBody Coupon coupon)
+    (@RequestHeader(name = "Authorization")String token, @RequestBody Coupon coupon)
             throws LoginException, CompanyException {
         jwt.checkClient(companyService,token,clientType);
-        companyService.addCoupon(coupon);
         return ResponseEntity.ok()
                 .header("Authorization", companyService.getToken())
-                .build();
+                .body(companyService.addCoupon(coupon));
 
     }
 
@@ -68,7 +67,7 @@ public class CompanyController {
      */
     @PutMapping("/updateCoupon")
     public ResponseEntity<?> updateCoupon
-            (@RequestHeader(name = "Authorization") String token, @RequestBody Coupon coupon)
+    (@RequestHeader(name = "Authorization") String token, @RequestBody Coupon coupon)
             throws CompanyException, LoginException {
         jwt.checkClient(companyService,token,clientType);
         companyService.updateCoupon(coupon);
@@ -87,7 +86,7 @@ public class CompanyController {
      */
     @DeleteMapping("/deleteCoupon/{id}")
     public ResponseEntity<?> deleteCoupon
-            (@RequestHeader(name = "Authorization")String token,@PathVariable int id)
+    (@RequestHeader(name = "Authorization")String token,@PathVariable int id)
             throws CompanyException, LoginException {
         jwt.checkClient(companyService,token,clientType);
         companyService.deleteCoupon(id);
@@ -105,7 +104,7 @@ public class CompanyController {
      */
     @GetMapping("/allCoupons")
     public ResponseEntity<?> allCoupons
-            (@RequestHeader(name = "Authorization")String token)
+    (@RequestHeader(name = "Authorization")String token)
             throws CompanyException, LoginException {
         jwt.checkClient(companyService,token,clientType);
         return ResponseEntity.ok()
@@ -123,7 +122,7 @@ public class CompanyController {
      */
     @GetMapping("/couponsByCategory/{category}")
     public ResponseEntity<?> couponsByCategory
-            (@RequestHeader(name = "Authorization")String token,@PathVariable Category category)
+    (@RequestHeader(name = "Authorization")String token,@PathVariable Category category)
             throws CompanyException, LoginException {
         jwt.checkClient(companyService,token,clientType);
         return ResponseEntity.ok()
